@@ -9,7 +9,7 @@ def commit_close(func):
         con.commit()
         con.close()
 
-sql = '''CREATE TABLE users (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+sql = '''CREATE TABLE IF NOT EXISTS users (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
                     phone TEXT NOT NULL,
                     email TEXT UNIQUE NOT NULL)'''
@@ -25,11 +25,9 @@ def db_insert(name, phone, email):
 def db_update(name, email):
     return "UPDATE users SET name = '{}' WHERE email = '{}'".format(name, email)
 
-
 @commit_close
 def db_delete(email):
     return "DELETE FROM users WHERE email = '{}'".format(email)
-
 
 def db_select(data,field):
     return '''SELECT id, name, phone,email 
